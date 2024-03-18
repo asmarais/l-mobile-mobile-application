@@ -3,32 +3,32 @@ import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Calendar } from "react-native-calendars";
 import CalendarHeader from "./CalendarHeader";
+import { useNavigation } from "@react-navigation/native";
 state = {
   selectedDate: "",
   markedDates: {},
 };
 export default function CalendarScreen() {
   const insets = useSafeAreaInsets();
-  /*getSelectedDayEvents = (date) => {
-    let markedDates = {};
-    markedDates[date] = {
-      selected: true,
-      color: "#00B0BF",
-      textColor: "#FFFFFF",
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [markedDates, setMarkedDates] = useState({});
+  const navigation = useNavigation();
+
+  const handleDateSelect = (date) => {
+    navigation.navigate("Event Details");
+    setSelectedDate(date);
+    const updatedMarkedDates = {
+      [date]: { selected: true, selectedColor: "#009ACD" },
     };
-    let serviceDate = moment(date);
-    serviceDate = serviceDate.format("DD.MM.YYYY");
-    this.setState({
-      selectedDate: serviceDate,
-      markedDates: markedDates,
-    });
+    setMarkedDates(updatedMarkedDates);
   };
-  */
   return (
     <View style={{ flex: 1, paddingTop: insets.top, backgroundColor: "#fff" }}>
       <CalendarHeader />
       <Calendar
         style={styles.calendar} /*markedDates={this.state.markedDates}*/
+        onDayPress={(day) => handleDateSelect(day.dateString)}
+        markedDates={markedDates}
       />
       <Text>Future Events</Text>
     </View>

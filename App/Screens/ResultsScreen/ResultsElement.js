@@ -1,10 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ResultsElement() {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate("Details");
+  };
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.textContainer}>
         <Text style={styles.text}>Monogolia Marathon 2023</Text>
         <MaterialCommunityIcons
@@ -15,7 +21,7 @@ export default function ResultsElement() {
         />
       </View>
       <Text style={styles.lowerText}>Jan 20</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

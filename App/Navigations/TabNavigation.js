@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen/HomeScreen";
 import ProfileScreen from "../Screens/ProfileScreen/ProfileScreen";
 import { FontAwesome, Entypo, AntDesign, Foundation } from "@expo/vector-icons";
-import CalendarScreen from "../Screens/CalendarScreen/CalendarScreen";
-import ResultsScreen from "../Screens/ResultsScreen/ResultsScreen";
+import ResultStack from "./ResultStack";
+import CalendarStack from "./CalendarStack";
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -32,7 +32,7 @@ export default function TabNavigation() {
 
       <Tab.Screen
         name="Calendar"
-        component={CalendarScreen}
+        component={CalendarStack}
         options={{
           tabBarLabel: ({ color }) => (
             <Text style={{ color: color, fontSize: 12, marginTop: -7 }}>
@@ -47,7 +47,7 @@ export default function TabNavigation() {
 
       <Tab.Screen
         name="Results"
-        component={ResultsScreen}
+        component={ResultStack}
         options={{
           tabBarLabel: ({ color }) => (
             <Text style={{ color: color, fontSize: 12, marginTop: -7 }}>
