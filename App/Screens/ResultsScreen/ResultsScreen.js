@@ -1,19 +1,54 @@
-import { View } from "react-native";
+import { FlatList, View, ScrollView, Animated } from "react-native";
 import React from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ResultsHeader from "./ResultsHeader";
-import ResultsFilter from "./ResultsFilter";
 import ResultsElement from "./ResultsElement";
+import { useNavigation } from "@react-navigation/native";
+import ResultsSearch from "./ResultsSearch";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ResultsScreen() {
-  const insets = useSafeAreaInsets();
+  {
+    /*After that change it with the data from DB*/
+  }
+  const navigation = useNavigation();
+
+  const handlePress = (title) => {
+    navigation.navigate("Details", { title });
+  };
+  const data = [
+    { id: "1", title: "Item 1" },
+    { id: "2", title: "Item 2" },
+    { id: "3", title: "Item 3" },
+    { id: "4", title: "Item 4" },
+    { id: "5", title: "Item 5" },
+    { id: "6", title: "Item 1" },
+    { id: "7", title: "Item 2" },
+    { id: "8", title: "Item 3" },
+    { id: "9", title: "Item 4" },
+    { id: "10", title: "Item 5" },
+  ];
+  const renderItem = ({ item }) => (
+    <ResultsElement title={item.title} handlePress={handlePress} />
+  );
+  const topMargin =
+    Platform.OS === "ios" ? { marginTop: 3 } : { marginTop: 15 };
 
   return (
-    <View style={{ flex: 1, paddingTop: insets.top, backgroundColor: "#fff" }}>
-      <ResultsHeader />
-      <ResultsFilter />
-      {/*A for loop to retrieve all the information*/}
-      <ResultsElement />
-    </View>
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ ...topMargin }}
+        className="mb-4"
+      >
+        <ResultsHeader />
+        {/*This need to be changed when I fetch the data from the database*/}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }

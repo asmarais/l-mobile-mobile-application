@@ -1,52 +1,28 @@
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-
-export default function ResultsElement() {
-  const navigation = useNavigation();
-
-  const handlePress = () => {
-    navigation.navigate("Details");
-  };
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+export default function ResultsElement({ title, handlePress }) {
   return (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>Monogolia Marathon 2023</Text>
+    <TouchableOpacity
+      className="space-y-2 pl-6 mb-5"
+      onPress={() => handlePress(title)}
+    >
+      <View className="flex-row -0">
+        <Text style={{ fontSize: wp(5) }} className="flex-1 font-bold text-lef">
+          {title}
+        </Text>
         <MaterialCommunityIcons
           name="chevron-right"
           size={24}
           color="black"
-          style={styles.arrow}
+          className="mr-24"
         />
       </View>
-      <Text style={styles.lowerText}>Jan 20</Text>
+      <Text style={{ fontSize: wp(3), color: "gray" }}>Jan 20</Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginLeft: 10,
-    padding: 10,
-    width: "100%",
-  },
-  textContainer: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  text: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "left",
-  },
-  arrow: {
-    marginRight: 24,
-  },
-  lowerText: {
-    fontSize: 12,
-    color: "gray",
-  },
-});
