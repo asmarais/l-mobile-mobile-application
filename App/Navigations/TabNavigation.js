@@ -6,6 +6,7 @@ import ProfileScreen from "../Screens/ProfileScreen/ProfileScreen";
 import { FontAwesome, Entypo, AntDesign, Foundation } from "@expo/vector-icons";
 import ResultStack from "./ResultStack";
 import CalendarStack from "./CalendarStack";
+import HomeStack from "./HomeStack";
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -17,7 +18,7 @@ export default function TabNavigation() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarLabel: ({ color }) => (
             <Text style={{ color: color, fontSize: 12, marginTop: -7 }}>

@@ -10,6 +10,7 @@ export default function ResultStack() {
     <Stack.Navigator
       screenOptions={{
         animation: "slide_from_right",
+        headerShown: false,
       }}
     >
       <Stack.Screen
@@ -17,13 +18,7 @@ export default function ResultStack() {
         component={ResultsScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="Details"
-        component={ResultDetails}
-        options={{
-          tabBarStyle: { display: "none" },
-        }}
-      />
+      <Stack.Screen name="Details" component={ResultDetails} />
     </Stack.Navigator>
   );
 }

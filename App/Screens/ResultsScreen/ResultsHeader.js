@@ -1,40 +1,45 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  ScrollView,
-  TextInput,
-} from "react-native";
-import React from "react";
+import { View, Text, Platform, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { theme } from "../../Theme";
 import { EvilIcons } from "@expo/vector-icons";
+import { SearchBar } from "@rneui/themed";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
+
+const plat = Platform.OS;
 const topMargin = Platform.OS === "ios" ? { marginTop: 3 } : { marginTop: 15 };
 
 export default function ResultsHeader() {
+  const navigation = useNavigation();
+
   return (
-    <View>
-      <View className="mx-5 flex-row justify-center items-center mb-8">
+    <View style={{ ...topMargin }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: wp(5),
+        }}
+      >
         <Text
-          style={{ fontSize: wp(7), color: theme.text }}
-          className="font-bold"
+          style={{
+            fontSize: wp(5),
+            fontWeight: "bold",
+            flex: 1,
+            textAlign: "center",
+          }}
         >
           Marathons
         </Text>
+        <TouchableOpacity>
+          <EvilIcons name="search" size={24} color={theme.text} />
+        </TouchableOpacity>
       </View>
       <View className="mx-5 mb-6">
-        <View className="flex-row items-center bg-neutral-100 p-2 space-x-2 pl-6 rounded-lg">
-          <EvilIcons name="search" size={24} color="gray" />
-          <TextInput
-            placeholder="Search Event"
-            placeholderTextColor={"gray"}
-            className="flex-1 text-base mb-1 pl-1 tracking-wider"
-          />
-        </View>
+        <SearchBar placeholder="Search" platform={plat} />
       </View>
     </View>
   );

@@ -1,4 +1,7 @@
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { Text, View } from "react-native";
 import Header from "./Header";
 import Performance from "./Performance";
@@ -9,11 +12,13 @@ const HomeScreen = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ flex: 1, paddingTop: insets.top }}>
-      <Header />
-      <Charts />
-      <Slider />
-    </View>
+    <SafeAreaView className="flex-1 bg-white">
+      <View style={{ flex: 1, backgroundColor: "white" }}>
+        <Header />
+        <Charts />
+        <Slider />
+      </View>
+    </SafeAreaView>
   );
 };
 export default HomeScreen;

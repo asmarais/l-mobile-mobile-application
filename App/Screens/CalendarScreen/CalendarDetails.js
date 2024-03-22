@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
-
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import backgroundImage from "../../../assets/background.png";
 import {
@@ -10,6 +9,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
+import { theme } from "../../Theme";
 
 export default function CalendarDetails({ navigation }) {
   const route = useRoute();
@@ -39,7 +39,7 @@ export default function CalendarDetails({ navigation }) {
       </SafeAreaView>
       {/*Events description*/}
       <View
-        style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40 }}
+        style={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
         className="px-5 flex flex-1 justify-between bg-white pt-8 -mt-14"
       >
         <ScrollView showsVerticalScrollIndicator={false} className="space-y-2">
@@ -58,7 +58,7 @@ export default function CalendarDetails({ navigation }) {
           </Text>
           <View className="flex-row justify-between mx-1">
             <View className="flex-row space-x-2 items-start">
-              <Feather name="clock" size={24} color="skyblue" />
+              <Feather name="clock" size={24} color={theme.text} />
               <View className="flex space-y-2">
                 <Text
                   style={{ fontSize: wp(4.5) }}
@@ -71,7 +71,7 @@ export default function CalendarDetails({ navigation }) {
             </View>
 
             <View className="flex-row space-x-2 items-start">
-              <Feather name="map-pin" size={24} color="skyblue" />
+              <Feather name="map-pin" size={24} color={theme.text} />
               <View className="flex space-y-2">
                 <Text
                   style={{ fontSize: wp(4.5) }}
@@ -86,9 +86,9 @@ export default function CalendarDetails({ navigation }) {
         </ScrollView>
         <TouchableOpacity
           style={{ backgroundColor: "#1C8FE3", height: wp(15), width: wp(50) }}
-          className="mb-6 mx-auto flex justify-center items-center rounded-full"
+          className="mb-6 mx-auto flex justify-center items-center rounded-xl"
         >
-          <Text className="text-white font-bold" style={{ fontSize: wp(5.5) }}>
+          <Text className="text-white font-bold" style={{ fontSize: wp(4.5) }}>
             Register now
           </Text>
         </TouchableOpacity>

@@ -11,8 +11,8 @@ export default function Charts() {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: "30%",
-    backgroundColor: "dodgerblue",
+    height: "45%",
+    backgroundColor: "white",
   },
   performanceText: {
     fontWeight: "bold",

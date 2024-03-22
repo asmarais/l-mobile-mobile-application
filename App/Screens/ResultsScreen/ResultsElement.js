@@ -5,6 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { theme } from "../../Theme";
 export default function ResultsElement({ title, handlePress }) {
   return (
     <TouchableOpacity
@@ -18,7 +19,7 @@ export default function ResultsElement({ title, handlePress }) {
         <MaterialCommunityIcons
           name="chevron-right"
           size={24}
-          color="black"
+          color={theme.text}
           className="mr-24"
         />
       </View>
