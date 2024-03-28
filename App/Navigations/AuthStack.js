@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-export default function Avatar() {
+export default function AuthStack() {
   return (
     <View>
-      <Text>Avatar</Text>
+      <Text>AuthStack</Text>
     </View>
   );
 }

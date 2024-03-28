@@ -1,34 +1,51 @@
-import { View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-
-import React from "react";
+import { View, Text, Platform, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { theme } from "../../Theme";
 import { EvilIcons } from "@expo/vector-icons";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
+
+const plat = Platform.OS;
+const topMargin = Platform.OS === "ios" ? { marginTop: 3 } : { marginTop: 15 };
 
 export default function CalendarHeader() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>All events</Text>
-      <EvilIcons name="search" size={24} color="black" style={styles.icon} />
+    <View style={{ ...topMargin }}>
+      <View
+        className="flex-row justify-between items-center"
+        style={{
+          paddingHorizontal: wp(5),
+        }}
+      >
+        <Text
+          className="text-center mx-auto font-bold"
+          style={{
+            fontSize: wp(5),
+          }}
+        >
+          Events
+        </Text>
+        <EvilIcons name="search" size={24} color="black" />
+      </View>
+      {/*sepration*/}
+      <View
+        className=" mt-4 mb-2 bg-gray-300"
+        style={{
+          height: hp(0.1),
+          width: wp(100),
+          shadowColor: "gray",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          elevation: 5,
+        }}
+      ></View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "10%",
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  headerText: {
-    flex: 1,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-});

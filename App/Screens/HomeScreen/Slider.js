@@ -33,7 +33,7 @@ export default function Slider() {
       </View>
 
       <TouchableOpacity
-        className="flex-row space-y-2 mt-2 mb-0"
+        className="flex-row space-y-2 mt-2 mb-2"
         onPress={() => navigation.navigate("Participant run")}
       >
         <Image

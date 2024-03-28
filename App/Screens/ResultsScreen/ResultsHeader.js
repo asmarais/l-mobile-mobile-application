@@ -19,7 +19,6 @@ export default function ResultsHeader() {
     <View style={{ ...topMargin }}>
       <View
         style={{
-          flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: wp(5),
         }}
@@ -28,16 +27,26 @@ export default function ResultsHeader() {
           style={{
             fontSize: wp(5),
             fontWeight: "bold",
-            flex: 1,
             textAlign: "center",
           }}
         >
           Marathons
         </Text>
-        <TouchableOpacity>
-          <EvilIcons name="search" size={24} color={theme.text} />
-        </TouchableOpacity>
       </View>
+      <View
+        className=" mt-4 mb-2 bg-gray-300"
+        style={{
+          height: hp(0.1),
+          width: wp(100),
+          shadowColor: "gray",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          elevation: 5,
+        }}
+      ></View>
+
       <View className="mx-5 mb-6">
         <SearchBar placeholder="Search" platform={plat} />
       </View>

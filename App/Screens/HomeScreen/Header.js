@@ -1,38 +1,50 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Platform, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { theme } from "../../Theme";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
 
-import React from "react";
+const plat = Platform.OS;
+const topMargin = Platform.OS === "ios" ? { marginTop: 3 } : { marginTop: 15 };
 
-export default function Header() {
+export default function CalendarHeader() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Welcome, Asma</Text>
-      <Ionicons
-        name="notifications-outline"
-        size={24}
-        color="black"
-        style={styles.icon}
-      />
+    <View style={{ ...topMargin }}>
+      <View
+        className="flex-row justify-between items-center"
+        style={{
+          paddingHorizontal: wp(5),
+        }}
+      >
+        <Text
+          className="text-center mx-auto font-bold"
+          style={{
+            fontSize: wp(5),
+          }}
+        >
+          Welcome, User
+        </Text>
+        <Ionicons name="notifications-outline" size={24} color="black" />
+      </View>
+      <View
+        className=" mt-4 mb-2 bg-gray-300"
+        style={{
+          height: hp(0.1),
+          width: wp(100),
+          shadowColor: "gray",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          elevation: 5,
+        }}
+      ></View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "10%",
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    marginRight: 10,
-  },
-  headerText: {
-    flex: 1,
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-});

@@ -1,12 +1,11 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../Screens/HomeScreen/HomeScreen";
-import ProfileScreen from "../Screens/ProfileScreen/ProfileScreen";
 import { FontAwesome, Entypo, AntDesign, Foundation } from "@expo/vector-icons";
 import ResultStack from "./ResultStack";
 import CalendarStack from "./CalendarStack";
 import HomeStack from "./HomeStack";
+import ProfileStack from "./ProfileStack";
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -63,7 +62,7 @@ export default function TabNavigation() {
 
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={ProfileStack}
         options={{
           tabBarLabel: ({ color }) => (
             <Text style={{ color: color, fontSize: 12, marginTop: -7 }}>
