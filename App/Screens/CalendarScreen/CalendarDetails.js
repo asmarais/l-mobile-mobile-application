@@ -46,6 +46,7 @@ export default function CalendarDetails({ navigation }) {
           <Text style={{ fontSize: wp(7) }} className="font-bold flex-1">
             Marathon
           </Text>
+
           <Text
             style={{ fontSize: wp(3.7) }}
             className="text-neutral-700 tracking-wide mb-2"
@@ -56,6 +57,7 @@ export default function CalendarDetails({ navigation }) {
             tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Sed quis velit sed metus pretium tincidunt.
           </Text>
+
           <View className="flex-row justify-between mx-1">
             <View className="flex-row space-x-2 items-start">
               <Feather name="clock" size={24} color={theme.text} />

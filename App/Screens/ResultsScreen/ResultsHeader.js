@@ -1,7 +1,15 @@
-import { View, Text, Platform, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Platform,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import React, { useState } from "react";
 import { theme } from "../../Theme";
 import { EvilIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+
 import { SearchBar } from "@rneui/themed";
 import {
   widthPercentageToDP as wp,
@@ -47,8 +55,17 @@ export default function ResultsHeader() {
         }}
       ></View>
 
-      <View className="mx-5 mb-6">
-        <SearchBar placeholder="Search" platform={plat} />
+      {/*Replace this with a search bar 
+              <SearchBar placeholder="Search" platform={plat} />
+*/}
+      <View className="mx-2 mb-2 flex-row bg-gray-50 p-3 rounded-xl">
+        <View>
+          <EvilIcons name="search" size={24} color="black" />
+        </View>
+        <TextInput placeholder="Search" className="flex-1 px-2 " />
+        <View>
+          <Ionicons name="filter" size={24} color="black" />
+        </View>
       </View>
     </View>
   );

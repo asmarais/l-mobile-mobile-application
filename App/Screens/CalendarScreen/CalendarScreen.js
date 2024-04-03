@@ -97,6 +97,7 @@ export default function CalendarScreen() {
                 </Text>
               </View>
             </TouchableOpacity>
+
             <TouchableOpacity className="flex-row space-y-2">
               <Image
                 source={backgroundImage}
@@ -116,8 +117,6 @@ export default function CalendarScreen() {
                 </Text>
               </View>
             </TouchableOpacity>
-
-            {/*Try to add multiple images*/}
           </ScrollView>
         </View>
       </View>
