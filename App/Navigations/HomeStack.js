@@ -7,6 +7,7 @@ import Participantrun from "../Screens/HomeScreen/Participantrun";
 import EventsList from "../Screens/CalendarScreen/EventsList";
 import Barcode from "../Screens/HomeScreen/BarCode";
 import Registration from "../Screens/HomeScreen/Registration";
+import CalendarScreen from "../Screens/CalendarScreen/CalendarScreen";
 
 export default function HomeStack() {
   const Stack = createNativeStackNavigator();
@@ -20,7 +21,11 @@ export default function HomeStack() {
       <Stack.Screen
         name="Events"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "Welcome",
+          headerTitleAlign: "center",
+        }}
       />
       <Stack.Screen name="Participant run" component={Participantrun} />
       <Stack.Screen name="Event List" component={EventsList} />
@@ -28,6 +33,11 @@ export default function HomeStack() {
       <Stack.Screen
         name="Camera"
         component={Barcode}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

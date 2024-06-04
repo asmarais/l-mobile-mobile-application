@@ -30,7 +30,6 @@ export default function CalendarHeader() {
         >
           Welcome, User
         </Text>
-        <Ionicons name="notifications-outline" size={24} color="black" />
       </View>
       <View
         className=" mt-4 mb-2 bg-gray-300"

@@ -7,7 +7,12 @@ export default function Barcode() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [scanTime, setScanTime] = useState(null);
-  const currentTime = new Date().toLocaleString();
+  const currentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -23,7 +28,7 @@ export default function Barcode() {
     setScanned(true);
     //setScanTime(currentTime.toString());
     //alert(`${data}`);
-    route.params.handleScannedData(data, currentTime); // Pass data and start time back to the parent component
+    route.params.handleScannedData(data, currentTime);
 
     navigation.goBack();
   };

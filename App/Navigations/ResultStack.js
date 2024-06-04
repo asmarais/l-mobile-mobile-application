@@ -16,7 +16,11 @@ export default function ResultStack() {
       <Stack.Screen
         name="Result"
         component={ResultsScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "Result",
+          headerTitleAlign: "center",
+        }}
       />
       <Stack.Screen name="Details" component={ResultDetails} />
     </Stack.Navigator>

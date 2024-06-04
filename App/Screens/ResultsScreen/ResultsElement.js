@@ -6,16 +6,16 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { theme } from "../../Theme";
-export default function ResultsElement({ title, handlePress }) {
+export default function ResultsElement({ data, handlePress }) {
   return (
-    <TouchableOpacity className="space-y-2 " onPress={() => handlePress(title)}>
-      <View className="pl-6 mt-2">
-        <View className="flex-row ">
+    <TouchableOpacity className="space-y-2 " onPress={() => handlePress(data)}>
+      <View className="pt-3 pb-3 pl-6 mt-2">
+        <View className="flex-row">
           <Text
             style={{ fontSize: wp(5) }}
             className="flex-1 font-bold text-lef"
           >
-            {title}
+            {data.eventName}
           </Text>
           <MaterialCommunityIcons
             name="chevron-right"
@@ -24,7 +24,6 @@ export default function ResultsElement({ title, handlePress }) {
             className="mr-24"
           />
         </View>
-        <Text style={{ fontSize: wp(3), color: "gray" }}>Jan 20</Text>
       </View>
       <View className="bg-gray-300" style={{ height: hp(0.1) }}></View>
     </TouchableOpacity>

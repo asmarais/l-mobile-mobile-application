@@ -12,13 +12,12 @@ const HomeScreen = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <View className="flex-1 bg-white">
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <Header />
         <Charts />
         <Slider />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 export default HomeScreen;

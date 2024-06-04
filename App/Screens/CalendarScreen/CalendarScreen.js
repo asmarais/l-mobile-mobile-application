@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -5,121 +6,171 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Calendar } from "react-native-calendars";
-import CalendarHeader from "./CalendarHeader";
 import { useNavigation } from "@react-navigation/native";
-import backgroundImage from "../../../assets/background.png";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { theme } from "../../Theme";
+import api from "../../Api/api";
 
-state = {
-  selectedDate: "",
-  markedDates: {},
-};
 export default function CalendarScreen() {
-  const insets = useSafeAreaInsets();
   const [selectedDate, setSelectedDate] = useState(null);
+  const [events, setEvents] = useState([]);
   const [markedDates, setMarkedDates] = useState({});
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-  const handleDateSelect = (date) => {
-    navigation.navigate("Event Details", { date });
-    setSelectedDate(date);
-    const updatedMarkedDates = {
-      [date]: { selected: true, selectedColor: "#009ACD" },
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const token = await AsyncStorage.getItem("Token");
+        if (token) {
+          const response = await api.get("Events", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setEvents(response.data);
+          const marked = {};
+          response.data.forEach((event) => {
+            const date = event.start.split("T")[0];
+            marked[date] = { marked: true, selectedColor: "#009ACD" };
+          });
+          setMarkedDates(marked);
+        } else {
+          console.error("Token not found in AsyncStorage");
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    setMarkedDates(updatedMarkedDates);
+
+    fetchEvents();
+  }, []);
+
+  const handleEventPress = (event) => {
+    navigation.navigate("Event Details", { eventData: event });
   };
 
-  return (
-    <SafeAreaView className="flex-1 bg-white">
-      <View style={{ flex: 1, backgroundColor: "white" }}>
-        <CalendarHeader />
-        <View
-          className="flex flex-1 px-2 mb-8 "
-          style={{ width: wp(100), height: hp(50) }}
-        >
-          <Calendar
-            className="rounded-full"
-            onDayPress={(day) => handleDateSelect(day.dateString)}
-            markedDates={markedDates}
-          />
-        </View>
-
-        <View className="px-5 flex flex-1 justify-between bg-white mt-4">
-          <View className="space-y-5">
-            <View className=" flex-row justify-between items-center">
-              <Text
-                style={{ fontSize: wp(5) }}
-                className="font-bold text-neutral-700"
-              >
-                Future Events
-              </Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Event List")}
-              >
-                <Text style={{ fontSize: wp(4), color: theme.text }}>
-                  See All
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <ScrollView
-            contentContainerStyle={{ paddingVertical: 15 }}
-            className="space-y-4"
-            showsHorizontalScrollIndicator={false}
-          >
-            <TouchableOpacity className="flex-row space-y-2 mb-2">
-              <Image
-                source={backgroundImage}
-                style={{ width: wp(40), height: wp(24) }}
-                className="rounded-xl"
-              />
-              <View className="flex mx-4">
-                <Text
-                  className="text-neutral-700 font-bold mb-2"
-                  style={{ fontSize: wp(4), width: wp(40) }}
-                  numberOfLines={2}
-                >
-                  L- Mobile Marathon Event
-                </Text>
-                <Text className="text-neutral-500 " style={{ fontSize: wp(3) }}>
-                  7:00 PM
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex-row space-y-2">
-              <Image
-                source={backgroundImage}
-                style={{ width: wp(40), height: wp(24) }}
-                className="rounded-xl"
-              />
-              <View className="flex mx-4">
-                <Text
-                  className="text-neutral-700 font-bold mb-2"
-                  style={{ fontSize: wp(4), width: wp(50) }}
-                  numberOfLines={2}
-                >
-                  L- Mobile Marathon Event
-                </Text>
-                <Text className="text-neutral-500 " style={{ fontSize: wp(3) }}>
-                  7:00 PM
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={theme.text} />
       </View>
-    </SafeAreaView>
+    );
+  }
+
+  const futureEvents = events
+    .filter((event) => event.status === "open")
+    .slice(0, 2);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.calendarContainer}>
+        <Calendar
+          onDayPress={(day) => setSelectedDate(day.dateString)}
+          markedDates={markedDates}
+        />
+      </View>
+      <View style={styles.eventsContainer}>
+        <View style={styles.eventsHeader}>
+          <Text style={styles.eventsHeaderText}>Future Events</Text>
+        </View>
+        {futureEvents.length > 0 ? (
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+          >
+            {futureEvents.map((event, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.eventCard}
+                onPress={() => handleEventPress(event)}
+              >
+                <Image
+                  source={{ uri: event.imageSrc }}
+                  style={styles.eventImage}
+                />
+                <View style={styles.eventInfo}>
+                  <Text style={styles.eventTitle} numberOfLines={2}>
+                    {event.eventName}
+                  </Text>
+                  <Text style={styles.eventTime}>{event.start}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        ) : (
+          <Text style={styles.noEventsText}>No open events yet</Text>
+        )}
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  calendarContainer: {
+    backgroundColor: "white",
+    paddingHorizontal: 8,
+    marginBottom: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  eventsContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    backgroundColor: "white",
+    marginTop: 16,
+  },
+  eventsHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  eventsHeaderText: {
+    fontSize: wp(5),
+    fontWeight: "bold",
+    color: "#4A4A4A",
+  },
+  scrollViewContent: {
+    paddingVertical: 15,
+  },
+  eventCard: {
+    flexDirection: "row",
+    marginBottom: 16,
+  },
+  eventImage: {
+    width: wp(40),
+    height: wp(24),
+    borderRadius: 10,
+  },
+  eventInfo: {
+    marginLeft: 16,
+    flex: 1,
+  },
+  eventTitle: {
+    fontSize: wp(4),
+    fontWeight: "bold",
+    color: "#4A4A4A",
+    marginBottom: 8,
+  },
+  eventTime: {
+    fontSize: wp(3),
+    color: "#9B9B9B",
+  },
+  noEventsText: {
+    fontSize: wp(4),
+    color: "#9B9B9B",
+    textAlign: "center",
+    marginTop: 20,
+  },
+});

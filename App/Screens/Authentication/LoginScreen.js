@@ -2,12 +2,13 @@ import {
   View,
   Text,
   Image,
-  SafeAreaView,
+  KeyboardAvoidingView,
   TouchableOpacity,
   TextInput,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,13 +16,37 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import { theme } from "../../Theme";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const { login } = useContext(AuthContext);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const isEmailValid = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
+  const isPasswordValid = (password) => {
+    return password.length >= 6;
+  };
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
-    <View className="flex-1 bg-white">
-      <View className="mx-4">
+    <KeyboardAvoidingView className="flex-1 bg-white">
+      <ScrollView className="mx-4" showsVerticalScrollIndicator={false}>
         <View className="mt-10 p-5">
           <Text
             style={{ color: theme.text, fontSize: wp(8) }}
@@ -40,9 +65,9 @@ export default function LoginScreen() {
           </Text>
         </View>
 
-        <View className=" items-center">
+        <View className=" items-center m-4">
           <Image
-            style={{ height: hp(40), width: wp(100) }}
+            style={{ height: hp(30), width: wp(90) }}
             source={require("../../../assets/Login.jpg")}
           />
         </View>
@@ -52,22 +77,51 @@ export default function LoginScreen() {
             placeholderTextColor="gray"
             style={{ height: hp(7) }}
             className="bg-gray-100 p-2 rounded-lg m-2"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
-          <TextInput
-            placeholder="Password"
-            placeholderTextColor="gray"
+          {email && !isEmailValid(email) && (
+            <Text style={{ color: "red", fontSize: wp(3), marginLeft: wp(2) }}>
+              Invalid email format
+            </Text>
+          )}
+          <View
+            className="bg-gray-100 p-2 rounded-lg m-2 flex-row items-center"
             style={{ height: hp(7) }}
-            className="bg-gray-100 p-2 rounded-lg m-2"
-          />
+          >
+            <TextInput
+              placeholder="Password"
+              placeholderTextColor="gray"
+              style={{ flex: 1 }}
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={handlePasswordChange}
+            />
+            <TouchableOpacity
+              onPress={toggleShowPassword}
+              style={{ paddingHorizontal: wp(2) }}
+            >
+              <Ionicons
+                name={showPassword ? "eye" : "eye-off"}
+                size={wp(6)}
+                color="gray"
+              />
+            </TouchableOpacity>
+          </View>
+          {password && !isPasswordValid(password) && (
+            <Text style={{ color: "red", fontSize: wp(3), marginLeft: wp(2) }}>
+              Password must be at least 6 characters long
+            </Text>
+          )}
         </ScrollView>
-        <Text className="flex self-end m-2"> Forgot your password?</Text>
+        {/*<Text className="flex self-end m-2"> Forgot your password?</Text>*/}
         <TouchableOpacity
           style={{
             backgroundColor: theme.text,
             height: hp(7),
           }}
           onPress={() => {
-            navigation.navigate("Login");
+            login(email, password);
           }}
           className="rounded-lg justify-center m-2"
         >
@@ -91,7 +145,7 @@ export default function LoginScreen() {
             Sign Up
           </Text>
         </View>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

@@ -18,14 +18,18 @@ export default function CalendarStack() {
       <Stack.Screen
         name="Events"
         component={CalendarScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "Events",
+          headerTitleAlign: "center",
+        }}
       />
+
       <Stack.Screen
         name="Event Details"
         component={CalendarDetails}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Event List" component={EventsList} />
     </Stack.Navigator>
   );
 }

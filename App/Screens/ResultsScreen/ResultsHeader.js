@@ -41,6 +41,7 @@ export default function ResultsHeader() {
           Marathons
         </Text>
       </View>
+
       <View
         className=" mt-4 mb-2 bg-gray-300"
         style={{
@@ -55,9 +56,7 @@ export default function ResultsHeader() {
         }}
       ></View>
 
-      {/*Replace this with a search bar 
-              <SearchBar placeholder="Search" platform={plat} />
-*/}
+      {/*
       <View className="mx-2 mb-2 flex-row bg-gray-50 p-3 rounded-xl">
         <View>
           <EvilIcons name="search" size={24} color="black" />
@@ -67,6 +66,7 @@ export default function ResultsHeader() {
           <Ionicons name="filter" size={24} color="black" />
         </View>
       </View>
+       */}
     </View>
   );
 }
