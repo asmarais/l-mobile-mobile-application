@@ -12,8 +12,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Calendar } from "react-native-calendars";
 import { useNavigation } from "@react-navigation/native";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { theme } from "../../Theme";
 import api from "../../Api/api";
+import { theme } from "../../Theme";
 
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -50,8 +50,13 @@ export default function CalendarScreen() {
     fetchEvents();
   }, []);
 
-  const handleEventPress = (event) => {
-    navigation.navigate("Event Details", { eventData: event });
+  const handleDayPress = (day) => {
+    const selectedDate = day.dateString;
+    setSelectedDate(selectedDate);
+    const event = events.find((e) => e.start.split("T")[0] === selectedDate);
+    if (event) {
+      navigation.navigate("Event Details", { eventData: event });
+    }
   };
 
   if (loading) {
@@ -69,10 +74,7 @@ export default function CalendarScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.calendarContainer}>
-        <Calendar
-          onDayPress={(day) => setSelectedDate(day.dateString)}
-          markedDates={markedDates}
-        />
+        <Calendar onDayPress={handleDayPress} markedDates={markedDates} />
       </View>
       <View style={styles.eventsContainer}>
         <View style={styles.eventsHeader}>
@@ -87,7 +89,9 @@ export default function CalendarScreen() {
               <TouchableOpacity
                 key={index}
                 style={styles.eventCard}
-                onPress={() => handleEventPress(event)}
+                onPress={() =>
+                  handleDayPress({ dateString: event.start.split("T")[0] })
+                }
               >
                 <Image
                   source={{ uri: event.imageSrc }}
@@ -109,7 +113,6 @@ export default function CalendarScreen() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -281,7 +281,7 @@ export default function SignUpScreen() {
             }}
             className="text-center text-white font-bold   "
           >
-            Sign Up
+            Next
           </Text>
         </TouchableOpacity>
         <View className="flex-row justify-center">

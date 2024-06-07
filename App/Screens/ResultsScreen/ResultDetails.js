@@ -51,18 +51,20 @@ export default function ResultDetails({ navigation }) {
         initialRegion={{
           latitude: (startLocation.latitude + endLocation.latitude) / 2,
           longitude: (startLocation.longitude + endLocation.longitude) / 2,
-          latitudeDelta:
-            Math.abs(startLocation.latitude - endLocation.latitude) * 1.5,
-          longitudeDelta:
-            Math.abs(startLocation.longitude - endLocation.longitude) * 1.5,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
         }}
       >
-        <Marker coordinate={startLocation} title="Start" />
-        <Marker coordinate={endLocation} title="End" />
+        <Marker
+          coordinate={startLocation}
+          title="Start Line"
+          pinColor="green"
+        />
+        <Marker coordinate={endLocation} title="Finish Line" pinColor="red" />
         <MapViewDirections
           origin={startLocation}
           destination={endLocation}
-          apikey={"AIzaSyCSIIjbB9x_zvRGGGjnTlHS1qS8xXNGcxU"}
+          apikey={"AIzaSyCSIIjbB9x_zvRGGGjnTlHS1qS8xXNGcxU"} // Replace with your API key
           strokeWidth={3}
           strokeColor="#FF0000"
           onError={(errorMessage) =>

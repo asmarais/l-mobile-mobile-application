@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { FlatList, ActivityIndicator, View, Platform } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ResultsHeader from "./ResultsHeader";
@@ -14,7 +14,7 @@ export default function ResultsScreen() {
   const navigation = useNavigation();
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const fetchEvents = async () => {
         try {
           const token = await AsyncStorage.getItem("Token");

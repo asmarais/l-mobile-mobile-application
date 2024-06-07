@@ -30,6 +30,8 @@ export default function HomeStack() {
       <Stack.Screen name="Participant run" component={Participantrun} />
       <Stack.Screen name="Event List" component={EventsList} />
       <Stack.Screen name="Registration" component={Registration} />
+      <Stack.Screen name="RegistrationDetails" component={Registration} />
+
       <Stack.Screen
         name="Camera"
         component={Barcode}

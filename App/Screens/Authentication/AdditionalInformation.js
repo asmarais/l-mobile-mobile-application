@@ -180,7 +180,7 @@ export default function AdditionalInformation() {
             }}
             className="text-center text-white font-bold"
           >
-            Confirm
+            Sign Up
           </Text>
         </TouchableOpacity>
       </ScrollView>
