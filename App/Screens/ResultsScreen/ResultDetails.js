@@ -64,7 +64,7 @@ export default function ResultDetails({ navigation }) {
         <MapViewDirections
           origin={startLocation}
           destination={endLocation}
-          apikey={"AIzaSyCSIIjbB9x_zvRGGGjnTlHS1qS8xXNGcxU"} // Replace with your API key
+          apikey={"apikey"} // Replace with your API key
           strokeWidth={3}
           strokeColor="#FF0000"
           onError={(errorMessage) =>
